@@ -7,6 +7,8 @@ var current_direction: Vector2 = Vector2(0, 0)
 var current_speed: float = 0.0
 var is_running: bool = false
 
+signal ball_stopped
+
 func _ready():
     launch(Vector2(1, 1), 10)
     
@@ -23,6 +25,7 @@ func process_collision(collision: KinematicCollision2D):
 func decay_speed(delta: float):
     current_speed -= delta * SPEED_DECAY
     if current_speed <= 0.0:
+        emit_signal("ball_stopped")
         is_running = false
         
 func launch(direction: Vector2, force: int):
